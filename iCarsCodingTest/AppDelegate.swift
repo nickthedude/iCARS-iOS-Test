@@ -19,8 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = UIColor.black
         window?.makeKeyAndVisible()
+        let navController = UINavigationController.init(rootViewController: ViewController())
         // Setup our initialViewController
-        window?.rootViewController = ViewController()
+        window?.rootViewController = navController
         return true
     }
 
@@ -45,7 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
 
 }
 

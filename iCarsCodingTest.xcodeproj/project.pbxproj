@@ -87,6 +87,7 @@
 			children = (
 				526E9B191DC3819000414CE6 /* iCarsCodingTest */,
 				526E9B2E1DC3819100414CE6 /* iCarsCodingTestTests */,
+				526E9B481DC3D56500414CE6 /* vendor */,
 				526E9B181DC3819000414CE6 /* Products */,
 				2F5E57BD5CBB748227909369 /* Pods */,
 				3E126D20A1E405BC104FF04E /* Frameworks */,
@@ -124,6 +125,14 @@
 				526E9B311DC3819100414CE6 /* Info.plist */,
 			);
 			path = iCarsCodingTestTests;
+			sourceTree = "<group>";
+		};
+		526E9B481DC3D56500414CE6 /* vendor */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = vendor;
+			path = iCarsCodingTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
