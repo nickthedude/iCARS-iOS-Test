@@ -8,6 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapViewController" customModule="iCarsCodingTest" customModuleProvider="target">
             <connections>
+                <outlet property="_sideMenu" destination="T1s-i8-u3k" id="ChR-xy-eCD"/>
                 <outlet property="view" destination="iN0-l3-epB" id="NpA-Qx-2C8"/>
             </connections>
         </placeholder>
@@ -16,7 +17,48 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <point key="canvasLocation" x="-53.5" y="36"/>
+            <point key="canvasLocation" x="-53.5" y="35.5"/>
+        </view>
+        <view contentMode="scaleToFill" id="T1s-i8-u3k" userLabel="Side Menu View">
+            <rect key="frame" x="0.0" y="0.0" width="222" height="176"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pDK-aJ-MxY">
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ZtY-mT-BQA">
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nnt-J4-jna">
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                    <state key="normal" title="New York">
+                                        <color key="titleColor" red="0.98039215690000003" green="0.29411764709999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csV-1L-IbA">
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                    <state key="normal" title="San Francisco">
+                                        <color key="titleColor" red="0.98039215690000003" green="0.29411764709999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Nx-Bb-mOf">
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                    <state key="normal" title="From SF to NY">
+                                        <color key="titleColor" red="0.98039215690000003" green="0.29411764709999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                </button>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" white="0.74404226618705038" alpha="0.52231124543795615" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="pDK-aJ-MxY" firstAttribute="top" secondItem="T1s-i8-u3k" secondAttribute="top" id="WCX-w3-Yjl"/>
+                <constraint firstAttribute="trailing" secondItem="pDK-aJ-MxY" secondAttribute="trailing" id="lCR-HM-Kzb"/>
+                <constraint firstAttribute="bottom" secondItem="pDK-aJ-MxY" secondAttribute="bottom" id="pFC-Ae-lbm"/>
+                <constraint firstItem="pDK-aJ-MxY" firstAttribute="leading" secondItem="T1s-i8-u3k" secondAttribute="leading" id="sX6-EA-j9U"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="298" y="-210"/>
         </view>
     </objects>
 </document>

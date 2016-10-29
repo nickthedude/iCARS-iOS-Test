@@ -18,11 +18,15 @@ class MapViewController: UIViewController , CLLocationManagerDelegate {
     /// Google Maps camera object member variable used to manipulate the viewing bounds of a GMSMapView object
     private var _camera = GMSCameraPosition.camera(withLatitude: 0.0, longitude: 0.0, zoom: 6.0)
 
+    @IBOutlet private var _sideMenu: UIView!
     
+    private var _sideMenuIsOnsceen  = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGPS()
         setupMap()
+        adjustSideMenuForParentsCurrentFrame()
         
         
     }
@@ -61,13 +65,16 @@ class MapViewController: UIViewController , CLLocationManagerDelegate {
         
     }
     
-    /// Function that initializes the Google Map services object with an API key retieved from a local config file. A camera position is aplied and the MapViewController's view is set to an instance of the GMSMapView Class.
+    /// Function that initializes the Google Map services object with an API key retieved from a local config file(configuration.plist). A camera position is aplied and the MapViewController's view is set to an instance of the GMSMapView Class.
     func setupMap()  {
         GMSServices.provideAPIKey(self.getConfigDictionary()!["googleMapsAPIKey"] as! String)
         _camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
-        let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: _camera)
+        let mapView = GMSMapView.map(withFrame: view.frame, camera: _camera)
         mapView.isMyLocationEnabled = true
         view = mapView
+        
+        view.addSubview(_sideMenu)
+
         
 //        // Creates a marker in the center of the map.
 //        let marker = GMSMarker()
@@ -109,23 +116,37 @@ class MapViewController: UIViewController , CLLocationManagerDelegate {
     
     /// Action triggered when the user presses the 'Menu' button located inside the navigation controller's navigation bar.
     func menuButtonPressed() {
-       print("button pressed")
+        toggleSideMenuOnScreen()
+        
     }
     
-    func setupEdgeMenu() {
+    /// Adjusts a side menu View frame. This display of this side menu will be the response to a user tapping the 'Menu' button in the navigation bar.
+    func adjustSideMenuForParentsCurrentFrame() {
+       // let sideMenuView
+        _sideMenu.frame = CGRect(x: view.frame.width, y: (view.frame.height * 0.125), width: _sideMenu.frame.width, height: _sideMenu.frame.height)
 
     }
     
-    func createButtonForSideMenu(title: String, action: String, color : UIColor) -> UIButton {
-        let button = UIButton.init(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
-        let sel = Selector.init(action)
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.setTitle(title, for: .normal)
-        button.backgroundColor = color
-        button.addTarget(self, action: sel, for: .touchUpInside)
-        return button
+    func toggleSideMenuOnScreen() {
+        if _sideMenuIsOnsceen {
+            // move sideMenu Off-screen
+            UIView.beginAnimations(nil, context: nil)
+            _sideMenu.center = CGPoint(x: (_sideMenu.center.x + 200.0), y: _sideMenu.center.y)
+            UIView.commitAnimations()
+            _sideMenuIsOnsceen = false
+
+            
+        } else {
+            // move sideMenu On-screen
+            UIView.beginAnimations(nil, context: nil)
+            _sideMenu.center = CGPoint(x: (_sideMenu.center.x - 200.0), y: _sideMenu.center.y)
+            UIView.commitAnimations()
+            _sideMenuIsOnsceen = true
+
+        }
         
     }
+    
 }
 
 
