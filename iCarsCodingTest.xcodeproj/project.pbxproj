@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		526E9B1B1DC3819000414CE6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E9B1A1DC3819000414CE6 /* AppDelegate.swift */; };
-		526E9B1D1DC3819000414CE6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E9B1C1DC3819000414CE6 /* ViewController.swift */; };
+		526E9B1D1DC3819000414CE6 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E9B1C1DC3819000414CE6 /* MapViewController.swift */; };
 		526E9B221DC3819000414CE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 526E9B211DC3819000414CE6 /* Assets.xcassets */; };
 		526E9B301DC3819100414CE6 /* iCarsCodingTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526E9B2F1DC3819100414CE6 /* iCarsCodingTestTests.swift */; };
-		526E9B3D1DC3831D00414CE6 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 526E9B3C1DC3831D00414CE6 /* ViewController.xib */; };
+		526E9B3D1DC3831D00414CE6 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 526E9B3C1DC3831D00414CE6 /* MapViewController.xib */; };
 		526E9B3F1DC384D400414CE6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 526E9B3E1DC384D400414CE6 /* Default-568h@2x.png */; };
 		526E9B431DC385E900414CE6 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 526E9B421DC385E900414CE6 /* Podfile */; };
 		526E9B471DC387C300414CE6 /* configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 526E9B461DC387C300414CE6 /* configuration.plist */; };
@@ -31,13 +31,13 @@
 /* Begin PBXFileReference section */
 		526E9B171DC3819000414CE6 /* iCarsCodingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iCarsCodingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		526E9B1A1DC3819000414CE6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		526E9B1C1DC3819000414CE6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		526E9B1C1DC3819000414CE6 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		526E9B211DC3819000414CE6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		526E9B261DC3819000414CE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		526E9B2B1DC3819100414CE6 /* iCarsCodingTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iCarsCodingTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		526E9B2F1DC3819100414CE6 /* iCarsCodingTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCarsCodingTestTests.swift; sourceTree = "<group>"; };
 		526E9B311DC3819100414CE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		526E9B3C1DC3831D00414CE6 /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
+		526E9B3C1DC3831D00414CE6 /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
 		526E9B3E1DC384D400414CE6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		526E9B421DC385E900414CE6 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = "<group>"; };
 		526E9B461DC387C300414CE6 /* configuration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = configuration.plist; path = ../configuration.plist; sourceTree = "<group>"; };
@@ -107,8 +107,8 @@
 			isa = PBXGroup;
 			children = (
 				526E9B1A1DC3819000414CE6 /* AppDelegate.swift */,
-				526E9B1C1DC3819000414CE6 /* ViewController.swift */,
-				526E9B3C1DC3831D00414CE6 /* ViewController.xib */,
+				526E9B1C1DC3819000414CE6 /* MapViewController.swift */,
+				526E9B3C1DC3831D00414CE6 /* MapViewController.xib */,
 				526E9B211DC3819000414CE6 /* Assets.xcassets */,
 				526E9B421DC385E900414CE6 /* Podfile */,
 				526E9B3E1DC384D400414CE6 /* Default-568h@2x.png */,
@@ -223,7 +223,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				526E9B3D1DC3831D00414CE6 /* ViewController.xib in Resources */,
+				526E9B3D1DC3831D00414CE6 /* MapViewController.xib in Resources */,
 				526E9B471DC387C300414CE6 /* configuration.plist in Resources */,
 				526E9B221DC3819000414CE6 /* Assets.xcassets in Resources */,
 				526E9B431DC385E900414CE6 /* Podfile in Resources */,
@@ -293,7 +293,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				526E9B1D1DC3819000414CE6 /* ViewController.swift in Sources */,
+				526E9B1D1DC3819000414CE6 /* MapViewController.swift in Sources */,
 				526E9B1B1DC3819000414CE6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
