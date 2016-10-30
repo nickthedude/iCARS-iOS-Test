@@ -11,7 +11,7 @@ import GoogleMaps
 import CoreLocation
 
 
-class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetworkManagerDelegate {
+class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetworkManagerDelegate, GMSMapViewDelegate {
 
     /// CoreLocation CLLocation manager member variable
     private var _locationManager  = CLLocationManager()
@@ -30,6 +30,9 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
     private var _markers : [GMSMarker] = []
     
     private var _encodedPoints : String = ""
+
+    private let _sfLocation = CLLocation.init(latitude: 37.7749, longitude: -122.4194)
+    private let _nyLocation = CLLocation.init(latitude: 40.7128, longitude: -74.0059)
     
     private typealias PayloadDict = [String: AnyObject]
     private typealias PayloadArray = [AnyObject]
@@ -40,8 +43,6 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
         setupMap()
         stylizeSideMenu()
         adjustSideMenuForParentsCurrentFrame()
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,40 +53,42 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupNavigationController()
-
     }
     
     /// retrieves the configuration dictionary from the main app bundle. The caller of this function is responsible for extracting individual values from the returned Dictionary. If there is no config dictionary an optional containing a nil value is returned.
     func getConfigDictionary() -> [String : AnyObject]? {
         let path = Bundle.main.path(forResource: "configuration", ofType: "plist")
         if let dict = NSDictionary(contentsOfFile: path!) as? [String : AnyObject] {
-            return dict
-        }
-        else {
-            return nil
-        }
+            return dict } else { return nil }
     }
     
     ///Convienence method for updating the _camera's viewable area based on the latitude and longitude parameters
     /// - Parameter latitude: a latitude in Double format used to orient the _camera along a vertical axis
     /// - Parameter longitude: a longitude in Double format used to orient the _camera along a horizontal axis
-    func updateMapViewToLocation(latitude: Double, longitude: Double) {
-        
+    func updateMapViewToLocation(latitude: Double, longitude: Double, zoom: Float?) {
+        if let zoomToSet = zoom  {
+            _camera = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom:zoomToSet)
+        }
+        else {
         _camera = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: _mapView.camera.zoom)
+        }
         _mapView.camera = _camera
-        
- 
+
     }
     
     /// Function that initializes the Google Map services object with an API key retieved from a local config file(configuration.plist). A camera position is aplied and the MapViewController's view is set to an instance of the GMSMapView Class.
     func setupMap()  {
         GMSServices.provideAPIKey(self.getConfigDictionary()!["googleMapsAPIKey"] as! String)
-        _camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
+        _camera = GMSCameraPosition.camera(withLatitude: _sfLocation.coordinate.latitude, longitude: _sfLocation.coordinate.longitude, zoom: 6.0)
         _mapView = GMSMapView.map(withFrame: view.frame, camera: _camera)
         _mapView.isMyLocationEnabled = true
+        _mapView.delegate = self
         view = _mapView
-        
         view.addSubview(_sideMenu)
+    }
+    
+    func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
+        _shouldSuspendLocationUpdates = true
     }
     
     /// Function that sets up the Core Location CLLocationManager instance and configures it so that this app will receive updates about changes in the users location.
@@ -100,7 +103,7 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if !_shouldSuspendLocationUpdates {
-            updateMapViewToLocation(latitude: locations[0].coordinate.latitude , longitude: locations[0].coordinate.longitude)
+            updateMapViewToLocation(latitude: locations[0].coordinate.latitude , longitude: locations[0].coordinate.longitude, zoom:nil)
         }
     }
     
@@ -170,28 +173,37 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
     
     @IBAction func newYorkButtonPressed(_ sender: AnyObject) {
         toggleSideMenuOnScreen()
-        let latitude = 40.7128, longitude = -74.0059
+        _mapView.clear()
         _shouldSuspendLocationUpdates = true
-        placeMarkerOnMapfor(latitude: latitude, longitude: longitude, title: "New York City", snippet: "United States")
-        updateMapViewToLocation(latitude: latitude, longitude:longitude )
+        
+        updateMapViewToLocation(latitude: _nyLocation.coordinate.latitude, longitude:_nyLocation.coordinate.longitude, zoom:Float(6.0))
+        placeNYMarker()
     }
     
     @IBAction func SFButtonPressed(_ sender: AnyObject) {
         //37.7749° N, 122.4194° W
         toggleSideMenuOnScreen()
-        let latitude = 37.7749, longitude = -122.4194
+        _mapView.clear()
         _shouldSuspendLocationUpdates = true
-        placeMarkerOnMapfor(latitude: latitude, longitude: longitude, title: "San Francisco", snippet: "United States")
-        updateMapViewToLocation(latitude: latitude, longitude:longitude )
+        placeSFMarker()
+        updateMapViewToLocation(latitude: _sfLocation.coordinate.latitude, longitude:_sfLocation.coordinate.longitude, zoom:Float(6.0))
+    }
+    
+    func placeSFMarker() {
+        placeMarkerOnMapfor(latitude: _sfLocation.coordinate.latitude, longitude: _sfLocation.coordinate.longitude, title: "San Francisco", snippet: "United States")
+    }
+    func placeNYMarker() {
+        placeMarkerOnMapfor(latitude: _nyLocation.coordinate.latitude, longitude: _nyLocation.coordinate.longitude, title: "New York City", snippet: "United States")
     }
     
     @IBAction func SFToNYButtonPressed(_ sender: AnyObject) {
+        _shouldSuspendLocationUpdates = true
+        _mapView.clear()
+        toggleSideMenuOnScreen()
         requestDirections(from: CLLocation.init(latitude: 37.7749, longitude: -122.4194), to: CLLocation.init(latitude: 40.7128, longitude: -74.0059))
     }
     
     func placeMarkerOnMapfor(latitude: Double, longitude: Double, title: String?, snippet: String?) {
-//        SFButtonPressed(nil as AnyObject)
-//        SFToNYButtonPressed()
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude:latitude, longitude: longitude)
         if let titleString = title {
@@ -201,6 +213,7 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
             marker.snippet = snippetString
         }
         marker.map = _mapView
+        _markers.append(marker)
     }
     
     func requestDirections(from:CLLocation, to:CLLocation)  {
@@ -225,6 +238,7 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
                 let points = overviewPolyline["points"] as? String else { return }
             _encodedPoints = points
             drawPolyline()
+
             
         } catch let error  {
             print("JSON error: \(error.localizedDescription)")
@@ -237,13 +251,24 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
         let tempMapView = _mapView
         
         DispatchQueue.main.async {
-            let path = GMSPath(fromEncodedPath: tempPoints)
+            if let path = GMSPath(fromEncodedPath: tempPoints) {
             let routeLine = GMSPolyline(path: path)
             routeLine.strokeWidth = 7
-            routeLine.strokeColor = UIColor.green
+            routeLine.strokeColor = UIColor.init(colorLiteralRed: 0.039, green: 0.376, blue: 0.996, alpha: 1.0)
             routeLine.map = tempMapView
+            self.showAllMarkersOnMapFor(path: path)
+            }
         }
-        
-        
+    }
+    
+    func showAllMarkersOnMapFor(path: GMSPath) {
+        let bounds = GMSCoordinateBounds.init(path: path)
+
+        DispatchQueue.main.async {
+
+            self.placeNYMarker()
+            self.placeSFMarker()
+            self._mapView.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 50.0))
+        }
     }
 }
