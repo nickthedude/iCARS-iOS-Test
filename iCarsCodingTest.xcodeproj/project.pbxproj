@@ -39,7 +39,7 @@
 		526E9B311DC3819100414CE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		526E9B3C1DC3831D00414CE6 /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
 		526E9B3E1DC384D400414CE6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
-		526E9B421DC385E900414CE6 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = "<group>"; };
+		526E9B421DC385E900414CE6 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		526E9B461DC387C300414CE6 /* configuration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = configuration.plist; path = ../configuration.plist; sourceTree = "<group>"; };
 		7657A8F4388A41350A206BE2 /* Pods-iCarsCodingTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCarsCodingTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iCarsCodingTest/Pods-iCarsCodingTest.debug.xcconfig"; sourceTree = "<group>"; };
 		9452E955DAE9A8EF3EE7DF3F /* libPods-iCarsCodingTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iCarsCodingTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
