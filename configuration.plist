@@ -4,5 +4,7 @@
 <dict>
 	<key>googleMapsAPIKey</key>
 	<string>AIzaSyB674PRDkSuHNmerNaIE4qXqDiM_UKGhxc</string>
+	<key>googleDirectionsAPIKey</key>
+	<string>AIzaSyAV_gx6LaCgHHhkziLJChx_D-Ozbl4iNrs</string>
 </dict>
 </plist>

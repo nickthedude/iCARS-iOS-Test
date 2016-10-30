@@ -10,7 +10,8 @@ import UIKit
 import GoogleMaps
 import CoreLocation
 
-class MapViewController: UIViewController , CLLocationManagerDelegate {
+
+class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetworkManagerDelegate {
 
     /// CoreLocation CLLocation manager member variable
     private var _locationManager  = CLLocationManager()
@@ -27,6 +28,11 @@ class MapViewController: UIViewController , CLLocationManagerDelegate {
     private var _sideMenuIsOnsceen  = false
     
     private var _markers : [GMSMarker] = []
+    
+    private var _encodedPoints : String = ""
+    
+    private typealias PayloadDict = [String: AnyObject]
+    private typealias PayloadArray = [AnyObject]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,8 +118,7 @@ class MapViewController: UIViewController , CLLocationManagerDelegate {
         if let navFont = UIFont(name: "HelveticaNeue-Light", size: 17.0) {
             let navBarAttributesDictionary: [String: AnyObject]? = [
                 NSForegroundColorAttributeName: UIColor.black,
-                NSFontAttributeName: navFont
-            ]
+                NSFontAttributeName: navFont]
             navigationController?.navigationBar.titleTextAttributes = navBarAttributesDictionary
         }
     }
@@ -154,18 +159,15 @@ class MapViewController: UIViewController , CLLocationManagerDelegate {
             _sideMenu.center = CGPoint(x: (_sideMenu.center.x + (view.frame.size.width * distanceMultiplier)), y: _sideMenu.center.y)
             UIView.commitAnimations()
             _sideMenuIsOnsceen = false
-
-            
         } else {
             // move sideMenu On-screen
             UIView.beginAnimations(nil, context: nil)
             _sideMenu.center = CGPoint(x: (_sideMenu.center.x - (view.frame.size.width * distanceMultiplier)), y: _sideMenu.center.y)
             UIView.commitAnimations()
             _sideMenuIsOnsceen = true
-
         }
-        
     }
+    
     @IBAction func newYorkButtonPressed(_ sender: AnyObject) {
         toggleSideMenuOnScreen()
         let latitude = 40.7128, longitude = -74.0059
@@ -173,6 +175,7 @@ class MapViewController: UIViewController , CLLocationManagerDelegate {
         placeMarkerOnMapfor(latitude: latitude, longitude: longitude, title: "New York City", snippet: "United States")
         updateMapViewToLocation(latitude: latitude, longitude:longitude )
     }
+    
     @IBAction func SFButtonPressed(_ sender: AnyObject) {
         //37.7749° N, 122.4194° W
         toggleSideMenuOnScreen()
@@ -181,10 +184,14 @@ class MapViewController: UIViewController , CLLocationManagerDelegate {
         placeMarkerOnMapfor(latitude: latitude, longitude: longitude, title: "San Francisco", snippet: "United States")
         updateMapViewToLocation(latitude: latitude, longitude:longitude )
     }
+    
     @IBAction func SFToNYButtonPressed(_ sender: AnyObject) {
+        requestDirections(from: CLLocation.init(latitude: 37.7749, longitude: -122.4194), to: CLLocation.init(latitude: 40.7128, longitude: -74.0059))
     }
     
     func placeMarkerOnMapfor(latitude: Double, longitude: Double, title: String?, snippet: String?) {
+//        SFButtonPressed(nil as AnyObject)
+//        SFToNYButtonPressed()
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude:latitude, longitude: longitude)
         if let titleString = title {
@@ -196,8 +203,47 @@ class MapViewController: UIViewController , CLLocationManagerDelegate {
         marker.map = _mapView
     }
     
+    func requestDirections(from:CLLocation, to:CLLocation)  {
+        let headers : [String: String] =   ["device-token"      : "abc123",
+                                            "accept-language"   : "en",
+                                            "client-name"       : "ios",
+                                            "Accept"            : "application/json"]
+        
+        let apiKey = self.getConfigDictionary()!["googleDirectionsAPIKey"] as! String
+        
+        let networkManager = TMINetworkManager.init(withHeaders: headers, andDelegate: self)
+        networkManager.addDataTaskToSession(withURLString:
+            "https://maps.googleapis.com/maps/api/directions/json?origin=\(from.coordinate.latitude),\(from.coordinate.longitude)&destination=\(to.coordinate.latitude),\(to.coordinate.longitude)&key=\(apiKey)")
+    }
     
+    func didFinishNetworkCall(withResults results: Data, fromManager manager: TMINetworkManager) {
+        do {
+            let json = try JSONSerialization.jsonObject(with: results as Data, options: .allowFragments) as! PayloadDict
+            guard let routes = json["routes"] as! PayloadArray!,
+                let route = routes[0] as? PayloadDict,
+                let overviewPolyline = route["overview_polyline"] as? PayloadDict,
+                let points = overviewPolyline["points"] as? String else { return }
+            _encodedPoints = points
+            drawPolyline()
+            
+        } catch let error  {
+            print("JSON error: \(error.localizedDescription)")
+        }
+
+    }
+    
+    func drawPolyline() {
+        let tempPoints = _encodedPoints
+        let tempMapView = _mapView
+        
+        DispatchQueue.main.async {
+            let path = GMSPath(fromEncodedPath: tempPoints)
+            let routeLine = GMSPolyline(path: path)
+            routeLine.strokeWidth = 7
+            routeLine.strokeColor = UIColor.green
+            routeLine.map = tempMapView
+        }
+        
+        
+    }
 }
-
-
-
