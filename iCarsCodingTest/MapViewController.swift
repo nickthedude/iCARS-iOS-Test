@@ -24,8 +24,12 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
     private var _shouldSuspendLocationUpdates  = false
 
     @IBOutlet private var _sideMenu: UIView!
+    @IBOutlet var _myLocationButton: UIButton!
+
     
     private var _sideMenuIsOnsceen  = false
+    
+    private var _hasShownAlertForLocationServices = false
     
     private var _markers : [GMSMarker] = []
     
@@ -89,6 +93,9 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
     
     func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
         _shouldSuspendLocationUpdates = true
+        if _sideMenuIsOnsceen {
+            toggleSideMenuOnScreen()
+        }
     }
     
     /// Function that sets up the Core Location CLLocationManager instance and configures it so that this app will receive updates about changes in the users location.
@@ -101,6 +108,29 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
         
     }
     
+    func testForLocationServices() {
+        if CLLocationManager.locationServicesEnabled() {
+            switch(CLLocationManager.authorizationStatus()) {
+            case .notDetermined, .restricted, .denied:
+                let alert = UIAlertController(title: "Location Services Needed", message: "This app works best with location services to be turned on. Please modify your settings to fully utilize this app. Settings->Privacy->LocationServices", preferredStyle: .alert)
+                let continueAction = UIAlertAction(title: "Continue without location", style: .default) { (result : UIAlertAction) -> Void in
+                    print("Continue without access")
+                }
+                let settingsAction = UIAlertAction(title: "Change settings", style: .cancel) { (result : UIAlertAction) -> Void in
+                    UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
+                }
+                alert.addAction(continueAction)
+                alert.addAction(settingsAction)
+                self.present(alert, animated: true, completion: nil)
+                
+            case .authorizedAlways, .authorizedWhenInUse:
+                print("Access")
+            }
+        } else {
+            print("Location services are not enabled")
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if !_shouldSuspendLocationUpdates {
             updateMapViewToLocation(latitude: locations[0].coordinate.latitude , longitude: locations[0].coordinate.longitude, zoom:nil)
@@ -108,9 +138,11 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-    
+        if !_hasShownAlertForLocationServices {
+            testForLocationServices()
+            _hasShownAlertForLocationServices = true
+        }
         print("location error")
-
     }
     
     /// Function that configures this View Controller's parenting Navigation Controller to display a title as well as creating and adding a 'Menu' button that the user may interact with.
@@ -271,4 +303,9 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
             self._mapView.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 50.0))
         }
     }
+    
+    @IBAction func myLocationButtonPressed(_ sender: Any) {
+        _shouldSuspendLocationUpdates = false
+    }
+    
 }

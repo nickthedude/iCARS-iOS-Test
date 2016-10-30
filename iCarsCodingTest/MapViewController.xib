@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapViewController" customModule="iCarsCodingTest" customModuleProvider="target">
             <connections>
+                <outlet property="_myLocationButton" destination="vvM-iC-dvf" id="YlA-PF-iQq"/>
                 <outlet property="_sideMenu" destination="T1s-i8-u3k" id="ChR-xy-eCD"/>
                 <outlet property="view" destination="iN0-l3-epB" id="NpA-Qx-2C8"/>
             </connections>
@@ -16,6 +20,16 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="top" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vvM-iC-dvf">
+                    <rect key="frame" x="306" y="606" width="66" height="52"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="button_my_location.png"/>
+                    <connections>
+                        <action selector="myLocationButtonPressed:" destination="-1" eventType="touchUpInside" id="s8i-mg-OFj"/>
+                    </connections>
+                </button>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <point key="canvasLocation" x="-53.5" y="35.5"/>
         </view>
@@ -24,10 +38,13 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pDK-aJ-MxY">
+                    <rect key="frame" x="12" y="18" width="210" height="154"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="ZtY-mT-BQA">
+                            <rect key="frame" x="0.0" y="0.0" width="210" height="154"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nnt-J4-jna">
+                                    <rect key="frame" x="0.0" y="0.0" width="71" height="51.5"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                     <state key="normal" title="New York">
                                         <color key="titleColor" red="0.039215686274509803" green="0.37647058823529411" blue="0.99607843137254903" alpha="1" colorSpace="calibratedRGB"/>
@@ -37,6 +54,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csV-1L-IbA">
+                                    <rect key="frame" x="0.0" y="51.5" width="105" height="51"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                     <state key="normal" title="San Francisco"/>
                                     <connections>
@@ -44,6 +62,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Nx-Bb-mOf">
+                                    <rect key="frame" x="0.0" y="102.5" width="109" height="51.5"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                     <state key="normal" title="From SF to NY"/>
                                     <connections>
@@ -56,9 +75,9 @@
                 </stackView>
             </subviews>
             <constraints>
-                <constraint firstItem="pDK-aJ-MxY" firstAttribute="top" secondItem="T1s-i8-u3k" secondAttribute="top" constant="8" id="WCX-w3-Yjl"/>
+                <constraint firstItem="pDK-aJ-MxY" firstAttribute="top" secondItem="T1s-i8-u3k" secondAttribute="top" constant="18" id="WCX-w3-Yjl"/>
                 <constraint firstAttribute="trailing" secondItem="pDK-aJ-MxY" secondAttribute="trailing" id="lCR-HM-Kzb"/>
-                <constraint firstAttribute="bottom" secondItem="pDK-aJ-MxY" secondAttribute="bottom" constant="8" id="pFC-Ae-lbm"/>
+                <constraint firstAttribute="bottom" secondItem="pDK-aJ-MxY" secondAttribute="bottom" constant="4" id="pFC-Ae-lbm"/>
                 <constraint firstItem="pDK-aJ-MxY" firstAttribute="leading" secondItem="T1s-i8-u3k" secondAttribute="leading" constant="12" id="sX6-EA-j9U"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -70,4 +89,7 @@
             <point key="canvasLocation" x="298" y="-210"/>
         </view>
     </objects>
+    <resources>
+        <image name="button_my_location.png" width="46" height="46"/>
+    </resources>
 </document>
