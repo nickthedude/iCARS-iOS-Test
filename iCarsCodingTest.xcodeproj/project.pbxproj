@@ -16,7 +16,6 @@
 		526E9B431DC385E900414CE6 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 526E9B421DC385E900414CE6 /* Podfile */; };
 		526E9B471DC387C300414CE6 /* configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 526E9B461DC387C300414CE6 /* configuration.plist */; };
 		52ADF7731DC5E98400A329C8 /* TMINetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ADF7721DC5E98300A329C8 /* TMINetworkManager.swift */; };
-		52B6478C1DC72708009782BA /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 52B6478B1DC72708009782BA /* README.md */; };
 		7F34FF744DE6A460133E9B36 /* libPods-iCarsCodingTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9452E955DAE9A8EF3EE7DF3F /* libPods-iCarsCodingTest.a */; };
 /* End PBXBuildFile section */
 
@@ -44,7 +43,6 @@
 		526E9B421DC385E900414CE6 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		526E9B461DC387C300414CE6 /* configuration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = configuration.plist; path = ../configuration.plist; sourceTree = "<group>"; };
 		52ADF7721DC5E98300A329C8 /* TMINetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMINetworkManager.swift; sourceTree = "<group>"; };
-		52B6478B1DC72708009782BA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7657A8F4388A41350A206BE2 /* Pods-iCarsCodingTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCarsCodingTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iCarsCodingTest/Pods-iCarsCodingTest.debug.xcconfig"; sourceTree = "<group>"; };
 		9452E955DAE9A8EF3EE7DF3F /* libPods-iCarsCodingTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iCarsCodingTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C32449C163D66CDCF7147B3A /* Pods-iCarsCodingTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iCarsCodingTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-iCarsCodingTest/Pods-iCarsCodingTest.release.xcconfig"; sourceTree = "<group>"; };
@@ -116,7 +114,6 @@
 				526E9B3C1DC3831D00414CE6 /* MapViewController.xib */,
 				526E9B211DC3819000414CE6 /* Assets.xcassets */,
 				526E9B421DC385E900414CE6 /* Podfile */,
-				52B6478B1DC72708009782BA /* README.md */,
 				526E9B3E1DC384D400414CE6 /* Default-568h@2x.png */,
 				526E9B261DC3819000414CE6 /* Info.plist */,
 				526E9B461DC387C300414CE6 /* configuration.plist */,
@@ -301,7 +298,6 @@
 			files = (
 				526E9B1D1DC3819000414CE6 /* MapViewController.swift in Sources */,
 				52ADF7731DC5E98400A329C8 /* TMINetworkManager.swift in Sources */,
-				52B6478C1DC72708009782BA /* README.md in Sources */,
 				526E9B1B1DC3819000414CE6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
