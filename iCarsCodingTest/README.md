@@ -6,5 +6,5 @@ Once downloaded/cloned open the Xcode workspace file located within the repo: iC
 
 To run the app, make sure the 'iCarsCodingTest' target is selected, then select a simulator type or build to your device with a developer provisioning profile. Then hit the "play" / Run button.  
 
-Note:To run on actual device you'll probably have to switch the 'Team' on the 'iCarsCodingTest' target.
+Note:To run on actual device you'll probably have to switch the 'Team' on the 'iCarsCodingTest' target. 
 
