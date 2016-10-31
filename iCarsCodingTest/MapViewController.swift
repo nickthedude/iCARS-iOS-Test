@@ -208,22 +208,22 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
     
     /// Adjusts _sideMenu's frame to an appropriate one based on device screen size.
     private func adjustSideMenuForParentsCurrentFrame() {
-        _sideMenu.frame = CGRect(x: view.frame.width, y: (view.frame.height * 0.08), width: _sideMenu.frame.width, height: _sideMenu.frame.height)
+        _sideMenu.frame = CGRect(x: (_sideMenu.frame.size.width * -1.0), y: (view.frame.height * 0.08), width: _sideMenu.frame.width, height: _sideMenu.frame.height)
     }
     
     /// Method to show/hide _sideMenu based on the current state of the _sideMenu.
     private func toggleSideMenuOnScreen() {
-        let distanceMultiplier : CGFloat = 0.6
+        let distanceMultiplier : CGFloat = 0.45
         if _sideMenuIsOnsceen {
             // move sideMenu Off-screen
             UIView.beginAnimations(nil, context: nil)
-            _sideMenu.center = CGPoint(x: (_sideMenu.center.x + (view.frame.size.width * distanceMultiplier)), y: _sideMenu.center.y)
+            _sideMenu.center = CGPoint(x: (_sideMenu.center.x - (view.frame.size.width * distanceMultiplier)), y: _sideMenu.center.y)
             UIView.commitAnimations()
             _sideMenuIsOnsceen = false
         } else {
             // move sideMenu On-screen
             UIView.beginAnimations(nil, context: nil)
-            _sideMenu.center = CGPoint(x: (_sideMenu.center.x - (view.frame.size.width * distanceMultiplier)), y: _sideMenu.center.y)
+            _sideMenu.center = CGPoint(x: (_sideMenu.center.x + (view.frame.size.width * distanceMultiplier)), y: _sideMenu.center.y)
             UIView.commitAnimations()
             _sideMenuIsOnsceen = true
         }

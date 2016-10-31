@@ -27,13 +27,13 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pDK-aJ-MxY">
-                    <rect key="frame" x="12" y="18" width="210" height="154"/>
+                    <rect key="frame" x="93" y="12" width="109" height="160"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="ZtY-mT-BQA">
-                            <rect key="frame" x="0.0" y="0.0" width="210" height="154"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ZtY-mT-BQA">
+                            <rect key="frame" x="0.0" y="0.0" width="109" height="160"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nnt-J4-jna">
-                                    <rect key="frame" x="0.0" y="0.0" width="71" height="51.5"/>
+                                    <rect key="frame" x="19" y="0.0" width="71" height="53.5"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                     <state key="normal" title="New York">
                                         <color key="titleColor" red="0.039215686274509803" green="0.37647058823529411" blue="0.99607843137254903" alpha="1" colorSpace="calibratedRGB"/>
@@ -43,7 +43,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csV-1L-IbA">
-                                    <rect key="frame" x="0.0" y="51.5" width="105" height="51"/>
+                                    <rect key="frame" x="2" y="53.5" width="105" height="53"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                     <state key="normal" title="San Francisco"/>
                                     <connections>
@@ -51,7 +51,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Nx-Bb-mOf">
-                                    <rect key="frame" x="0.0" y="102.5" width="109" height="51.5"/>
+                                    <rect key="frame" x="0.0" y="106.5" width="109" height="53.5"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                     <state key="normal" title="From SF to NY"/>
                                     <connections>
@@ -64,10 +64,9 @@
                 </stackView>
             </subviews>
             <constraints>
-                <constraint firstItem="pDK-aJ-MxY" firstAttribute="top" secondItem="T1s-i8-u3k" secondAttribute="top" constant="18" id="WCX-w3-Yjl"/>
-                <constraint firstAttribute="trailing" secondItem="pDK-aJ-MxY" secondAttribute="trailing" id="lCR-HM-Kzb"/>
+                <constraint firstItem="pDK-aJ-MxY" firstAttribute="top" secondItem="T1s-i8-u3k" secondAttribute="top" constant="12" id="WCX-w3-Yjl"/>
+                <constraint firstAttribute="trailing" secondItem="pDK-aJ-MxY" secondAttribute="trailing" constant="20" id="lCR-HM-Kzb"/>
                 <constraint firstAttribute="bottom" secondItem="pDK-aJ-MxY" secondAttribute="bottom" constant="4" id="pFC-Ae-lbm"/>
-                <constraint firstItem="pDK-aJ-MxY" firstAttribute="leading" secondItem="T1s-i8-u3k" secondAttribute="leading" constant="12" id="sX6-EA-j9U"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <userDefinedRuntimeAttributes>
