@@ -30,9 +30,9 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
     private var _markers : [GMSMarker] = []
     /// The place where the encoded polyline points string is stored before being imposed on _mapView.
     private var _encodedPointsString : String = ""
-    /// CLLocation object representing SF
+    /// CLLocation object representing SF.
     private let _sfLocation = CLLocation.init(latitude: 37.7749, longitude: -122.4194)
-    /// CLLocation object representing NY
+    /// CLLocation object representing NY.
     private let _nyLocation = CLLocation.init(latitude: 40.7128, longitude: -74.0059)
     /// Type aliases to more clearly show how the JSON parsing is being done.
     private typealias PayloadDict = [String: AnyObject]
@@ -79,11 +79,11 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
         _locationManager.startUpdatingLocation()
     }
     
-    /// Function that configures this View Controller's parenting Navigation Controller to display a title as well as creating and adding a 'Menu' button that the user may interact with.
+    /// Function that configures this View Controller's parenting Navigation Controller to display a title as well as creating and adding a 'Menu' button that the user may interact with. Also changes NavCOntroller's title Font.
     private func setupNavigationController()  {
         title = "iCars Test"
         let menuButton = UIBarButtonItem.init(title:"Menu", style:.plain, target: self, action:#selector(menuButtonPressed))
-        navigationItem.rightBarButtonItem = menuButton
+        navigationItem.leftBarButtonItem = menuButton
         if let navFont = UIFont(name: "HelveticaNeue-Light", size: 17.0) {
             let navBarAttributesDictionary: [String: AnyObject]? = [
                 NSForegroundColorAttributeName: UIColor.black,
@@ -92,7 +92,7 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
         }
     }
     
-    /// This method creates and assigns the blur effect to the _sideMenu UIView
+    /// This method creates and assigns the blur effect to the _sideMenu UIView.
     private func stylizeSideMenu() {
         //only apply the blur if transparency effects are enabled
         if !UIAccessibilityIsReduceTransparencyEnabled() {
@@ -107,14 +107,14 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
     }
     
     // MARK: - Helper functions
-    /// retrieves the configuration dictionary from the main app bundle. The caller of this function is responsible for extracting individual values from the returned Dictionary. If there is no config dictionary an optional containing a nil value is returned.
+    /// Retrieves the configuration dictionary from the main app bundle. The caller of this function is responsible for extracting individual values from the returned Dictionary. If there is no config dictionary an optional containing a nil value is returned.
     private func getConfigDictionary() -> [String : AnyObject]? {
         let path = Bundle.main.path(forResource: "configuration", ofType: "plist")
         if let dict = NSDictionary(contentsOfFile: path!) as? [String : AnyObject] {
             return dict } else { return nil }
     }
     
-    /// This method tests to see if the user has enabled Location Services for this app and if not warns, requests the user turn the services on in the settings app.
+    /// This method tests to see if the user has enabled Location Services for this app and if not warns and requests that the user turn on the service in the settings app.
     private func testForLocationServices() {
         if CLLocationManager.locationServicesEnabled() {
             switch(CLLocationManager.authorizationStatus()) {
@@ -140,9 +140,9 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
     // MARK: - Mapview helper methods
     
     ///Convienence method for updating the _camera's viewable area based on the latitude and longitude parameters
-    /// - Parameter latitude: a latitude in Double format used to orient the _camera along a vertical axis
-    /// - Parameter longitude: a longitude in Double format used to orient the _camera along a horizontal axis
-    /// - Parameter zoom: a Float used to determine how much of the map is shown on screen
+    /// - Parameter latitude: A latitude in Double format used to orient the _camera along a vertical axis
+    /// - Parameter longitude: A longitude in Double format used to orient the _camera along a horizontal axis
+    /// - Parameter zoom: A Float used to determine how much of the map is shown on screen
     private func updateMapViewToLocation(latitude: Double, longitude: Double, zoom: Float?) {
         if let zoomToSet = zoom  {
             _camera = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom:zoomToSet)
@@ -161,6 +161,10 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
         placeMarkerOnMapfor(latitude: _nyLocation.coordinate.latitude, longitude: _nyLocation.coordinate.longitude, title: "New York City", snippet: "United States")
     }
     /// convienence method for placing GMSMarkers on the _mapView
+    /// - Parameter latitude: A latitude in Double format used to place GMSMarker.
+    /// - Parameter longitude: A longitude in Double format used to place GMSMarker.
+    /// - Parameter title: String to descibe the GMSMarkers marked location.
+    /// - Parameter snippet: String to further descibe the GMSMarkers marked location.
     private func placeMarkerOnMapfor(latitude: Double, longitude: Double, title: String?, snippet: String?) {
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude:latitude, longitude: longitude)
@@ -173,7 +177,7 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
         marker.map = _mapView
         _markers.append(marker)
     }
-    /// draws the polyline from SF to NY based on the local var _encodedPointsString which is set when we receive a response from the google directions API and parsed out of the JSON response. This is done on the main thread as required by the Google Maps iOS API.
+    /// Draws the polyline from SF to NY based on the member property '_encodedPointsString' which is set when we receive a response from the google directions API and parsed out of the JSON response. The drawing is done on the main thread as required by the Google Maps iOS API.
     private func drawPolyline() {
         DispatchQueue.main.async {
             if let path = GMSPath(fromEncodedPath: self._encodedPointsString) {
@@ -186,6 +190,7 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
         }
     }
     /// Method to frame all points on _mapView within the camera's bounds. Must be performed on main thread per Google Maps iOS API.
+    /// - Parameter path: A GMSPath that the camera and _mapView will frame.
     private func showAllMarkersOnMapFor(path: GMSPath) {
         let bounds = GMSCoordinateBounds.init(path: path)
         DispatchQueue.main.async {
@@ -201,7 +206,7 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
         toggleSideMenuOnScreen()
     }
     
-    /// Adjusts a side menu View frame. This display of this side menu will be the response to a user tapping the 'Menu' button in the navigation bar.
+    /// Adjusts _sideMenu's frame to an appropriate one based on device screen size.
     private func adjustSideMenuForParentsCurrentFrame() {
         _sideMenu.frame = CGRect(x: view.frame.width, y: (view.frame.height * 0.08), width: _sideMenu.frame.width, height: _sideMenu.frame.height)
     }
