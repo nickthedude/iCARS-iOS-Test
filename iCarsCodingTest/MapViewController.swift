@@ -36,8 +36,9 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
     private let _losAngelesLocation = CLLocation.init(latitude: 34.0385, longitude: -118.3076)
     /// CLLocation object representing San Luis Obispo.
     private let _sanLuisObispoLocation = CLLocation.init(latitude: 35.28105, longitude: -120.66073)
+    private var hundredMileIncrements : [CLLocationCoordinate2D] = []
 
-    
+    private var lengthOfTrip = 0
     /// Type aliases to more clearly show how the JSON parsing is being done.
     private typealias PayloadDict = [String: AnyObject]
     private typealias PayloadArray = [AnyObject]
@@ -187,7 +188,18 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
     /// Draws the polyline from SF to NY based on the member property '_encodedPointsString' which is set when we receive a response from the google directions API and parsed out of the JSON response. The drawing is done on the main thread as required by the Google Maps iOS API.
     private func drawPolyline() {
         DispatchQueue.main.async {
-            if let path = GMSPath(fromEncodedPath: self._encodedPointsString) {
+            if let path = GMSMutablePath(fromEncodedPath: self._encodedPointsString) {
+                //take gmspath created from encoded return value
+                var numberOfSegments = Int(self.lengthOfTrip / 160000)
+                
+                // use segmentsForLength method to get the segment approx. 100 miles away
+                for i in 0..<numberOfSegments {
+                    var segments = path.segments(forLength: CLLocationDistance(160000 * i), kind: kGMSLengthRhumb)
+                    var myInt = Int(segments)
+                    // use coordinateAtIndex: method on mutablePath to get CLLocationCoordinate2D
+                    self.hundredMileIncrements.append(path.coordinate(at: UInt(myInt)))
+                }
+                
                 let routeLine = GMSPolyline(path: path)
                 routeLine.strokeWidth = 7
                 routeLine.strokeColor = UIColor.init(colorLiteralRed: 0.039, green: 0.376, blue: 0.996, alpha: 1.0)
@@ -204,8 +216,17 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
             self.placeNYMarker()
             self.placeSFMarker()
             self.placeSLOMarker()
+            self.showGasStationMarkers()
             self._mapView.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 50.0))
         }
+    }
+    
+    private func showGasStationMarkers() {
+        
+        for coordinate in hundredMileIncrements {
+            placeMarkerOnMapfor(latitude: coordinate.latitude, longitude: coordinate.longitude, title: "Gas Station", snippet: "")
+        }
+        
     }
     
     // MARK: - Menu Button related methods
@@ -287,8 +308,22 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
             let json = try JSONSerialization.jsonObject(with: results as Data, options: .allowFragments) as! PayloadDict
             guard let routes = json["routes"] as! PayloadArray!,
                 let route = routes[0] as? PayloadDict,
+                let legs = route["legs"] as? PayloadArray,
+                let totalsLeg1 = legs[0] as? PayloadDict,
+                let totalsLeg2 = legs[1] as? PayloadDict,
+
+                let distanceLeg1 = totalsLeg1["distance"] as? PayloadDict,
+                let distanceLeg2 = totalsLeg2["distance"] as? PayloadDict,
+
+                let valueLeg1 = distanceLeg1["value"] as? NSNumber,
+                let valueLeg2 = distanceLeg2["value"] as? NSNumber,
+
+                
                 let overviewPolyline = route["overview_polyline"] as? PayloadDict,
                 let points = overviewPolyline["points"] as? String else { return }
+//            let val1 = valueLeg1 as! Int
+//            let val2 = valueLeg2 as! Int
+            lengthOfTrip = valueLeg1.intValue + valueLeg2.intValue
             _encodedPointsString = points
             drawPolyline()
         } catch let error  {
