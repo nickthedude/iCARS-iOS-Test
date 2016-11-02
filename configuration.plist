@@ -6,5 +6,7 @@
 	<string>AIzaSyB674PRDkSuHNmerNaIE4qXqDiM_UKGhxc</string>
 	<key>googleDirectionsAPIKey</key>
 	<string>AIzaSyAV_gx6LaCgHHhkziLJChx_D-Ozbl4iNrs</string>
+	<key>googlePlacesAPIKey</key>
+	<string>AIzaSyCkI4WUjptmSWSGd2oDmaE0KuH0t7F848s</string>
 </dict>
 </plist>

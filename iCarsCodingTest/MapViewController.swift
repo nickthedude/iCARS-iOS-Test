@@ -32,8 +32,12 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
     private var _encodedPointsString : String = ""
     /// CLLocation object representing SF.
     private let _sfLocation = CLLocation.init(latitude: 37.7749, longitude: -122.4194)
-    /// CLLocation object representing NY.
-    private let _nyLocation = CLLocation.init(latitude: 40.7128, longitude: -74.0059)
+    /// CLLocation object representing Los Angeles.
+    private let _losAngelesLocation = CLLocation.init(latitude: 34.0385, longitude: -118.3076)
+    /// CLLocation object representing San Luis Obispo.
+    private let _sanLuisObispoLocation = CLLocation.init(latitude: 35.28105, longitude: -120.66073)
+
+    
     /// Type aliases to more clearly show how the JSON parsing is being done.
     private typealias PayloadDict = [String: AnyObject]
     private typealias PayloadArray = [AnyObject]
@@ -158,7 +162,10 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
     }
     /// Places a GMSMarker on the _mapview for New York
     private func placeNYMarker() {
-        placeMarkerOnMapfor(latitude: _nyLocation.coordinate.latitude, longitude: _nyLocation.coordinate.longitude, title: "New York City", snippet: "United States")
+        placeMarkerOnMapfor(latitude: _losAngelesLocation.coordinate.latitude, longitude: _losAngelesLocation.coordinate.longitude, title: "New York City", snippet: "United States")
+    }
+    private func placeSLOMarker() {
+        placeMarkerOnMapfor(latitude: _sanLuisObispoLocation.coordinate.latitude, longitude: _sanLuisObispoLocation.coordinate.longitude, title: "San Luis Obispo", snippet: "United States")
     }
     /// convienence method for placing GMSMarkers on the _mapView
     /// - Parameter latitude: A latitude in Double format used to place GMSMarker.
@@ -196,6 +203,7 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
         DispatchQueue.main.async {
             self.placeNYMarker()
             self.placeSFMarker()
+            self.placeSLOMarker()
             self._mapView.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 50.0))
         }
     }
@@ -234,7 +242,7 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
         toggleSideMenuOnScreen()
         _mapView.clear()
         _shouldSuspendLocationUpdates = true
-        updateMapViewToLocation(latitude: _nyLocation.coordinate.latitude, longitude:_nyLocation.coordinate.longitude, zoom:Float(6.0))
+        updateMapViewToLocation(latitude: _losAngelesLocation.coordinate.latitude, longitude:_losAngelesLocation.coordinate.longitude, zoom:Float(6.0))
         placeNYMarker()
     }
     
@@ -253,7 +261,7 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
         _shouldSuspendLocationUpdates = true
         _mapView.clear()
         toggleSideMenuOnScreen()
-        requestDirections(from: CLLocation.init(latitude: 37.7749, longitude: -122.4194), to: CLLocation.init(latitude: 40.7128, longitude: -74.0059))
+        requestDirections(from: CLLocation.init(latitude: _sfLocation.coordinate.latitude , longitude: _sfLocation.coordinate.longitude), to: CLLocation.init(latitude: _losAngelesLocation.coordinate.latitude, longitude: _losAngelesLocation.coordinate.longitude))
     }
 
     // MARK: - Google Directions API Query method
@@ -268,7 +276,8 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
         
         let networkManager = TMINetworkManager.init(withHeaders: headers, andDelegate: self)
         networkManager.addDataTaskToSession(withURLString:
-            "https://maps.googleapis.com/maps/api/directions/json?origin=\(from.coordinate.latitude),\(from.coordinate.longitude)&destination=\(to.coordinate.latitude),\(to.coordinate.longitude)&key=\(apiKey)")
+            "https://maps.googleapis.com/maps/api/directions/json?origin=\(from.coordinate.latitude),\(from.coordinate.longitude)&destination=\(to.coordinate.latitude),\(to.coordinate.longitude)&waypoints=\(_sanLuisObispoLocation.coordinate.latitude),\(_sanLuisObispoLocation.coordinate.longitude)&key=\(apiKey)")
+        
     }
 
     // MARK: - TMINetworkManager Delegate methods
@@ -309,4 +318,9 @@ class MapViewController: UIViewController , CLLocationManagerDelegate, TMINetwor
             toggleSideMenuOnScreen()
         }
     }
+    
+    //take gmspath created from encoded return value
+    // use segmentsForLength method to get the segment approx. 100 miles away
+    // use coordinateAtIndex: method on mutablePath to get CLLocationCoordinate2D
+    
 }
